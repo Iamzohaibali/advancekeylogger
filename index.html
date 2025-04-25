@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advance Keylogger App</title>
   <style>
     * {
       margin: 0;
@@ -12,8 +12,8 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #6b7280, #1e3a8a);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1e3a8a, #6b7280);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -21,106 +21,234 @@
       justify-content: center;
       padding: 20px;
       overflow-x: hidden;
+      color: #e2e8f0;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      text-align: center;
     }
 
     h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
       color: #ffffff;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      margin-bottom: 2rem;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1.5rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
       animation: slideIn 1s ease-out;
     }
 
     .download-container {
-      position: relative;
       margin: 2rem 0;
+      position: relative;
     }
 
-    button {
-      background: linear-gradient(45deg, #3b82f6, #60a5fa);
+    .btn {
+      background: linear-gradient(45deg, #2563eb, #60a5fa);
       color: white;
       border: none;
-      padding: clamp(12px, 3vw, 18px) clamp(24px, 5vw, 36px);
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      border-radius: 12px;
+      padding: clamp(12px, 3vw, 16px) clamp(24px, 5vw, 32px);
+      font-size: clamp(1rem, 2.5vw, 1.1rem);
+      border-radius: 8px;
       cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      z-index: 1;
     }
 
-    button::before {
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn::before {
       content: '';
       position: absolute;
       top: 0;
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-      );
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
       transition: 0.5s;
     }
 
-    button:hover::before {
+    .btn:hover::before {
       left: 100%;
     }
 
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    }
-
-    button:active {
-      transform: translateY(0);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    p.developer {
-      color: #e2e8f0;
-      font-size: clamp(0.9rem, 2vw, 1.1rem);
-      margin-top: 2rem;
-      opacity: 0;
-      animation: fadeIn 1s ease-out 0.5s forwards;
-    }
-
-    .instructions {
+    .progress-bar {
+      display: none;
+      width: 100%;
+      height: 6px;
       background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+
+    .progress {
+      width: 0;
+      height: 100%;
+      background: #60a5fa;
+      transition: width 0.1s linear;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #1e293b;
       border-radius: 12px;
       padding: 2rem;
-      margin: 2rem 0;
       max-width: 600px;
-      color: #e2e8f0;
-      text-align: left;
-      animation: fadeIn 1s ease-out 0.7s forwards;
-      opacity: 0;
+      width: 90%;
+      animation: fadeIn 0.3s ease-out;
+      position: relative;
     }
 
-    .instructions h2 {
+    .modal-content h2 {
       color: #ffffff;
-      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-size: clamp(1.5rem, 3vw, 1.8rem);
       margin-bottom: 1rem;
     }
 
-    .instructions ol {
+    .modal-content ol {
       list-style: decimal;
       padding-left: 1.5rem;
       font-size: clamp(0.9rem, 2vw, 1rem);
+      margin-bottom: 1rem;
     }
 
-    .instructions li {
+    .modal-content li {
       margin-bottom: 0.8rem;
     }
 
-    .instructions code {
-      background: rgba(0, 0, 0, 0.2);
+    .modal-content code {
+      background: rgba(0, 0, 0, 0.3);
       padding: 2px 6px;
       border-radius: 4px;
-      font-family: 'Courier New', Courier, monospace;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .feedback-form {
+      margin-top: 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+
+    .feedback-form h3 {
+      color: #ffffff;
+      font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+      margin-bottom: 1rem;
+    }
+
+    .feedback-form input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      font-size: 1rem;
+    }
+
+    .feedback-form button {
+      width: 100%;
+    }
+
+    .error {
+      border-color: #ef4444 !important;
+    }
+
+    .success-message {
+      display: none;
+      color: #34d399;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    .feedback-box {
+      margin-top: 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .feedback-box h3 {
+      color: #ffffff;
+      font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      max-width: 100%;
+    }
+
+    .feedback-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      animation: slideUp 0.5s ease-out;
+      border-left: 4px solid #60a5fa;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .feedback-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .feedback-name {
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 1rem;
+    }
+
+    .feedback-text {
+      color: #d1d5db;
+      font-size: 0.95rem;
+      word-break: break-word;
+    }
+
+    p.developer {
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.5s forwards;
     }
 
     .particle {
@@ -153,6 +281,17 @@
       }
     }
 
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
     @keyframes particleAnimation {
       0% {
         transform: translateY(0);
@@ -169,12 +308,20 @@
         font-size: clamp(1.8rem, 6vw, 2.5rem);
       }
 
-      button {
-        padding: clamp(10px, 4vw, 14px) clamp(20px, 6vw, 28px);
+      .btn {
+        padding: clamp(10px, 4vw, 12px) clamp(20px, 6vw, 24px);
       }
 
-      .instructions {
+      .modal-content {
         padding: 1.5rem;
+      }
+
+      .feedback-box {
+        padding: 1rem;
+      }
+
+      .feedback-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       }
     }
 
@@ -184,99 +331,232 @@
       }
 
       h1 {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
       }
 
       p.developer {
         margin-top: 1.5rem;
       }
 
-      .instructions {
-        margin: 1.5rem 0;
+      .feedback-form {
         padding: 1rem;
+      }
+
+      .feedback-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <h1>Advance Keylogger App</h1>
-  <div class="download-container">
-    <a href="app.rar" download>
-      <button>Download App</button>
-    </a>
+  <div class="container">
+    <h1>Advance Keylogger App</h1>
+    <div class="download-container">
+      <button class="btn" id="downloadBtn">Download App</button>
+      <div class="progress-bar" id="progressBar">
+        <div class="progress" id="progress"></div>
+      </div>
+    </div>
+    <button class="btn" id="instructionsBtn">View Instructions</button>
+    <div class="feedback-form">
+      <h3>Provide Feedback</h3>
+      <input type="text" id="name" placeholder="Your Name" />
+      <input type="text" id="feedback" placeholder="Your Feedback (max 50 characters)" maxlength="50" />
+      <button class="btn" id="submitFeedback">Submit Feedback</button>
+      <p class="success-message" id="successMessage">Thank you for your feedback!</p>
+    </div>
+    <div class="feedback-box" id="feedbackBox">
+      <h3>User Feedback</h3>
+      <div class="feedback-grid" id="feedbackList"></div>
+    </div>
+    <p class="developer">Developer: Zohaib Ahmad Ali</p>
   </div>
-  <div class="instructions">
-    <h2>How to Use</h2>
-    <ol>
-      <li>Download the app by clicking the "Download App" button.</li>
-      <li>Extract the downloaded <code>app.rar</code> file.</li>
-      <li>Open the extracted folder in VS Code.</li>
-      <li>Open the terminal in VS Code.</li>
-      <li>Run the following command to install dependencies:
-        <code>pip install -r requirements.txt</code>
-      </li>
-      <li>Open and run the <code>main.py</code> file.</li>
-    </ol>
+
+  <div class="modal" id="instructionsModal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeModal">×</button>
+      <h2>How to Use</h2>
+      <ol>
+        <li>Download the app by clicking the "Download App" button.</li>
+        <li>Extract the downloaded <code>app.rar</code> file.</li>
+        <li>Open the extracted folder in VS Code.</li>
+        <li>Open the terminal in VS Code.</li>
+        <li>Run the following command to install dependencies:
+          <code>pip install -r requirements.txt</code>
+        </li>
+        <li>Open and run the <code>main.py</code> file.</li>
+      </ol>
+    </div>
   </div>
-  <p class="developer">Developer: Zohaib Ahmad Ali</p>
 
   <script>
+    // Particle Effects
     function createParticle() {
       const particle = document.createElement('div');
       particle.classList.add('particle');
-      const size = Math.random() * 8 + 4;
+      const size = Math.random() * 6 + 3;
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
       particle.style.left = `${Math.random() * window.innerWidth}px`;
       particle.style.animationDuration = `${Math.random() * 2 + 1}s`;
       document.body.appendChild(particle);
-
-      setTimeout(() => {
-        particle.remove();
-      }, 2000);
+      setTimeout(() => particle.remove(), 2000);
     }
 
     function startParticles() {
       createParticle();
-      setTimeout(startParticles, 100);
+      setTimeout(startParticles, 150);
     }
 
     startParticles();
 
-    const button = document.querySelector('button');
-    button.addEventListener('click', () => {
+    // Download Button with Progress Bar
+    const downloadBtn = document.getElementById('downloadBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progress = document.getElementById('progress');
+
+    downloadBtn.addEventListener('click', () => {
+      progressBar.style.display = 'block';
+      let width = 0;
+      const interval = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(interval);
+          progressBar.style.display = 'none';
+          progress.style.width = '0%';
+          // Simulate download
+          const link = document.createElement('a');
+          link.href = 'app.rar';
+          link.download = 'app.rar';
+          link.click();
+        } else {
+          width += 2;
+          progress.style.width = `${width}%`;
+        }
+      }, 50);
+
+      // Burst effect
       for (let i = 0; i < 10; i++) {
         setTimeout(() => {
           const burst = document.createElement('div');
           burst.classList.add('particle');
           burst.style.background = '#60a5fa';
-          burst.style.left = `${button.offsetLeft + button.offsetWidth / 2}px`;
-          burst.style.top = `${button.offsetTop + button.offsetHeight / 2}px`;
+          burst.style.left = `${downloadBtn.offsetLeft + downloadBtn.offsetWidth / 2}px`;
+          burst.style.top = `${downloadBtn.offsetTop + downloadBtn.offsetHeight / 2}px`;
           burst.style.animation = 'burstAnimation 0.5s ease-out';
           document.body.appendChild(burst);
-
-          setTimeout(() => {
-            burst.remove();
-          }, 500);
+          setTimeout(() => burst.remove(), 500);
         }, i * 50);
       }
     });
 
+    // Modal for Instructions
+    const instructionsBtn = document.getElementById('instructionsBtn');
+    const instructionsModal = document.getElementById('instructionsModal');
+    const closeModal = document.getElementById('closeModal');
+
+    instructionsBtn.addEventListener('click', () => {
+      instructionsModal.style.display = 'flex';
+    });
+
+    closeModal.addEventListener('click', () => {
+      instructionsModal.style.display = 'none';
+    });
+
+    instructionsModal.addEventListener('click', (e) => {
+      if (e.target === instructionsModal) {
+        instructionsModal.style.display = 'none';
+      }
+    });
+
+    // Feedback Form and Display with Local Storage
+    const submitFeedback = document.getElementById('submitFeedback');
+    const nameInput = document.getElementById('name');
+    const feedbackInput = document.getElementById('feedback');
+    const successMessage = document.getElementById('successMessage');
+    const feedbackList = document.getElementById('feedbackList');
+
+    // Load feedback from localStorage
+    let feedbackEntries = JSON.parse(localStorage.getItem('feedbackEntries')) || [];
+
+    function saveFeedback() {
+      localStorage.setItem('feedbackEntries', JSON.stringify(feedbackEntries));
+    }
+
+    function addFeedback(name, feedback) {
+      feedbackEntries.unshift({ name, feedback }); // Add to beginning for newest first
+      saveFeedback();
+      renderFeedback();
+    }
+
+    function renderFeedback() {
+      feedbackList.innerHTML = '';
+      feedbackEntries.forEach(entry => {
+        const feedbackItem = document.createElement('div');
+        feedbackItem.classList.add('feedback-item');
+        feedbackItem.innerHTML = `
+          <span class="feedback-name">${sanitizeHTML(entry.name)}</span>
+          <span class="feedback-text">${sanitizeHTML(entry.feedback)}</span>
+        `;
+        feedbackList.appendChild(feedbackItem);
+      });
+    }
+
+    // Basic HTML sanitization to prevent XSS
+    function sanitizeHTML(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Initial render
+    renderFeedback();
+
+    submitFeedback.addEventListener('click', () => {
+      let valid = true;
+      if (!nameInput.value.trim()) {
+        nameInput.classList.add('error');
+        valid = false;
+      } else {
+        nameInput.classList.remove('error');
+      }
+
+      if (!feedbackInput.value.trim()) {
+        feedbackInput.classList.add('error');
+        valid = false;
+      } else {
+        feedbackInput.classList.remove('error');
+      }
+
+      if (valid) {
+        addFeedback(nameInput.value.trim(), feedbackInput.value.trim());
+        successMessage.style.display = 'block';
+        nameInput.value = '';
+        feedbackInput.value = '';
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+        }, 3000);
+      }
+    });
+
+    // Prevent Enter key from creating new lines
+    feedbackInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submitFeedback.click();
+      }
+    });
+
+    // Dynamic Styles
     const styleSheet = document.createElement('style');
     styleSheet.textContent = `
       @keyframes burstAnimation {
-        0% {
-          transform: scale(0);
-          opacity: 1;
-        }
-        100% {
-          transform: scale(2) translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px);
-          opacity: 0;
-        }
+        0% { transform: scale(0); opacity: 1; }
+        100% { transform: scale(2) translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px); opacity: 0; }
       }
     `;
     document.head.appendChild(styleSheet);
 
+    // Responsive Particles
     window.addEventListener('resize', () => {
       const particles = document.querySelectorAll('.particle');
       particles.forEach(particle => {
