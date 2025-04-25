@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6b7280, #1e3a8a);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      color: #ffffff;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 2rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      animation: slideIn 1s ease-out;
+    }
+
+    .download-container {
+      position: relative;
+      margin: 2rem 0;
+    }
+
+    button {
+      background: linear-gradient(45deg, #3b82f6, #60a5fa);
+      color: white;
+      border: none;
+      padding: clamp(12px, 3vw, 18px) clamp(24px, 5vw, 36px);
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      z-index: 1;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transition: 0.5s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    p.developer {
+      color: #e2e8f0;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.5s forwards;
+    }
+
+    .instructions {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      max-width: 600px;
+      color: #e2e8f0;
+      text-align: left;
+      animation: fadeIn 1s ease-out 0.7s forwards;
+      opacity: 0;
+    }
+
+    .instructions h2 {
+      color: #ffffff;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 1rem;
+    }
+
+    .instructions ol {
+      list-style: decimal;
+      padding-left: 1.5rem;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    .instructions li {
+      margin-bottom: 0.8rem;
+    }
+
+    .instructions code {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      pointer-events: none;
+      animation: particleAnimation 2s linear infinite;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes particleAnimation {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+      }
+
+      button {
+        padding: clamp(10px, 4vw, 14px) clamp(20px, 6vw, 28px);
+      }
+
+      .instructions {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      h1 {
+        margin-bottom: 1.5rem;
+      }
+
+      p.developer {
+        margin-top: 1.5rem;
+      }
+
+      .instructions {
+        margin: 1.5rem 0;
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Advance Keylogger App</h1>
+  <div class="download-container">
+    <a href="app.rar" download>
+      <button>Download App</button>
+    </a>
+  </div>
+  <div class="instructions">
+    <h2>How to Use</h2>
+    <ol>
+      <li>Download the app by clicking the "Download App" button.</li>
+      <li>Extract the downloaded <code>app.rar</code> file.</li>
+      <li>Open the extracted folder in VS Code.</li>
+      <li>Open the terminal in VS Code.</li>
+      <li>Run the following command to install dependencies:
+        <code>pip install -r requirements.txt</code>
+      </li>
+      <li>Open and run the <code>main.py</code> file.</li>
+    </ol>
+  </div>
+  <p class="developer">Developer: Zohaib Ahmad Ali</p>
+
+  <script>
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      const size = Math.random() * 8 + 4;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${Math.random() * window.innerWidth}px`;
+      particle.style.animationDuration = `${Math.random() * 2 + 1}s`;
+      document.body.appendChild(particle);
+
+      setTimeout(() => {
+        particle.remove();
+      }, 2000);
+    }
+
+    function startParticles() {
+      createParticle();
+      setTimeout(startParticles, 100);
+    }
+
+    startParticles();
+
+    const button = document.querySelector('button');
+    button.addEventListener('click', () => {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          const burst = document.createElement('div');
+          burst.classList.add('particle');
+          burst.style.background = '#60a5fa';
+          burst.style.left = `${button.offsetLeft + button.offsetWidth / 2}px`;
+          burst.style.top = `${button.offsetTop + button.offsetHeight / 2}px`;
+          burst.style.animation = 'burstAnimation 0.5s ease-out';
+          document.body.appendChild(burst);
+
+          setTimeout(() => {
+            burst.remove();
+          }, 500);
+        }, i * 50);
+      }
+    });
+
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = `
+      @keyframes burstAnimation {
+        0% {
+          transform: scale(0);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(2) translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+
+    window.addEventListener('resize', () => {
+      const particles = document.querySelectorAll('.particle');
+      particles.forEach(particle => {
+        if (parseFloat(particle.style.left) > window.innerWidth) {
+          particle.style.left = `${window.innerWidth - 10}px`;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
